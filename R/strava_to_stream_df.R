@@ -1,27 +1,27 @@
-#' Processes gpx files and stores the result in a data frame
+#' Gathers GPS streams from Strava's API. returns a list containing the activity stream, and activity summary data
 #'
-#' Processes gpx files and stores the result in a data frame. The code is adapted from the blog post \href{https://rcrastinate.blogspot.com/2014/09/stay-on-track-plotting-gps-tracks-with-r.html}{Stay on track: Plotting GPS tracks with R} by Sascha W.
-#' @param path The file path to the directory containing the gpx files
-#' @param old_gpx_format If TRUE, uses the old format for gpx files (for files bulk exported from Strava prior to ~May 2018)
-#' @keywords
-#' @export
-#' @examples
-#' process_data()
+#' @param stoken authorization token obtained from strava (see rStrava documentation)
+#' @param nacts number of recent activities to get, default is 1, maximum value is 100
+#' strava_to_stream_df()
 
-strava_to_stream_df <- function(stoken, nacts){
-  if(nacts > 100) message("se traeran las 100 actividades mas recientes")
+strava_to_stream_df <- function(stoken, nacts = 1){
+  if(nacts > 100) message("the 100 most recent activities will be fetched")
   
+  # retrieve metadata, exclude activities without GPS recording
   act_metadata <- rStrava::get_activity_list(stoken) %>% 
     rStrava::compile_activities() %>%
     rStrava::chk_nopolyline()
   
+  # sets maximum number of activities to 100 (due to Strava's API limitations)
   nacts <- min(nacts,100)
   act_metadata <- act_metadata[1:nacts,]
+  
+  # get selected activities streams and rename variables
   streams <- rStrava::get_activity_streams(act_metadata, stoken) %>% 
     rename_stream()  
   
+    # reconstruct time stamp according to file streams convention
   streams <- merge(streams,act_metadata[,c("id","start_date_local")], by="id")
-  
   streams$timestamp <- streams$time + lubridate::as_datetime(streams$start_date_local)
   streams$start_date_local <- NULL
   

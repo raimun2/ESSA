@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Vignette Author" />
+
+<meta name="date" content="2021-02-19" />
+
+<title>Vignette Title</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Vignette Title</h1>
+<h4 class="author">Vignette Author</h4>
+<h4 class="date">2021-02-19</h4>
+
+
+
+<p>devtools::install_github(‘fawda123/rStrava’) library(rStrava)</p>
+<p>app_name &lt;- ‘xxxx’ # chosen by user app_client_id &lt;- ‘xxxx’ # an integer, assigned by Strava app_secret &lt;- ‘xxxxxxxxxxxxxxxxxxxx’ # an alphanumeric secret, assigned by Strava</p>
+<p>Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The <code>html_vignette</code> output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The <code>html_vignette</code> format:</p>
+<ul>
+<li>Never uses retina figures</li>
+<li>Has a smaller default figure size</li>
+<li>Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style</li>
+</ul>
+<div id="vignette-info" class="section level2">
+<h2>Vignette Info</h2>
+<p>Note the various macros within the <code>vignette</code> section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your vignette.</p>
+</div>
+<div id="styles" class="section level2">
+<h2>Styles</h2>
+<p>The <code>html_vignette</code> template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:</p>
+<pre><code>output: 
+  rmarkdown::html_vignette:
+    css: mystyles.css</code></pre>
+</div>
+<div id="figures" class="section level2">
+<h2>Figures</h2>
+<p>The figure sizes have been customised so that you can easily put two images side-by-side.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># library(tidyverse)</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># </span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># streams &lt;- readRDS(&quot;datasets/streams_rai.RData&quot;)</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># </span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># data &lt;- streams$streams</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># </span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># </span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co"># data$timestamp &lt;- NULL</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co"># data$timestamp &lt;- NULL</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co"># </span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co"># data &lt;- merge(data, aggregate(distance~id,data,max) %&gt;%  </span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="co">#                 rename(max_dist = distance), by = &quot;id&quot;)</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co"># </span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="co"># data &lt;- merge(data, aggregate(elev~id,data,min) %&gt;%  </span></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#                 rename(min_elev = elev), by = &quot;id&quot;)</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co"># </span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co"># data$percentage &lt;- data$distance / data$max_dist</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="co"># </span></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="co"># </span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="co"># </span></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="co"># </span></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="co"># library(ggridges)</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a><span class="co"># </span></span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="co"># ggplot(data, aes(x = percentage, y = min_elev, height = elev - min_elev, fill = stat(y))) + </span></span>
+<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#   geom_ridgeline_gradient() +</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#   scale_fill_viridis_c(name = &quot;Temp. [F]&quot;, option = &quot;C&quot;)</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="co">#   </span></span>
+<span id="cb2-29"><a href="#cb2-29"></a><span class="co"># </span></span>
+<span id="cb2-30"><a href="#cb2-30"></a><span class="co"># plot(1:10)</span></span>
+<span id="cb2-31"><a href="#cb2-31"></a><span class="co"># plot(10:1)</span></span></code></pre></div>
+<p>You can enable figure captions by <code>fig_caption: yes</code> in YAML:</p>
+<pre><code>output:
+  rmarkdown::html_vignette:
+    fig_caption: yes</code></pre>
+<p>Then you can use the chunk option <code>fig.cap = &quot;Your figure caption.&quot;</code> in <strong>knitr</strong>.</p>
+</div>
+<div id="more-examples" class="section level2">
+<h2>More Examples</h2>
+<p>You can write math expressions, e.g. <span class="math inline">\(Y = X\beta + \epsilon\)</span>, footnotes<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, and tables, e.g. using <code>knitr::kable()</code>.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">mpg</th>
+<th align="right">cyl</th>
+<th align="right">disp</th>
+<th align="right">hp</th>
+<th align="right">drat</th>
+<th align="right">wt</th>
+<th align="right">qsec</th>
+<th align="right">vs</th>
+<th align="right">am</th>
+<th align="right">gear</th>
+<th align="right">carb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Mazda RX4</td>
+<td align="right">21.0</td>
+<td align="right">6</td>
+<td align="right">160.0</td>
+<td align="right">110</td>
+<td align="right">3.90</td>
+<td align="right">2.620</td>
+<td align="right">16.46</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Mazda RX4 Wag</td>
+<td align="right">21.0</td>
+<td align="right">6</td>
+<td align="right">160.0</td>
+<td align="right">110</td>
+<td align="right">3.90</td>
+<td align="right">2.875</td>
+<td align="right">17.02</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Datsun 710</td>
+<td align="right">22.8</td>
+<td align="right">4</td>
+<td align="right">108.0</td>
+<td align="right">93</td>
+<td align="right">3.85</td>
+<td align="right">2.320</td>
+<td align="right">18.61</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Hornet 4 Drive</td>
+<td align="right">21.4</td>
+<td align="right">6</td>
+<td align="right">258.0</td>
+<td align="right">110</td>
+<td align="right">3.08</td>
+<td align="right">3.215</td>
+<td align="right">19.44</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Hornet Sportabout</td>
+<td align="right">18.7</td>
+<td align="right">8</td>
+<td align="right">360.0</td>
+<td align="right">175</td>
+<td align="right">3.15</td>
+<td align="right">3.440</td>
+<td align="right">17.02</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Valiant</td>
+<td align="right">18.1</td>
+<td align="right">6</td>
+<td align="right">225.0</td>
+<td align="right">105</td>
+<td align="right">2.76</td>
+<td align="right">3.460</td>
+<td align="right">20.22</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Duster 360</td>
+<td align="right">14.3</td>
+<td align="right">8</td>
+<td align="right">360.0</td>
+<td align="right">245</td>
+<td align="right">3.21</td>
+<td align="right">3.570</td>
+<td align="right">15.84</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Merc 240D</td>
+<td align="right">24.4</td>
+<td align="right">4</td>
+<td align="right">146.7</td>
+<td align="right">62</td>
+<td align="right">3.69</td>
+<td align="right">3.190</td>
+<td align="right">20.00</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Merc 230</td>
+<td align="right">22.8</td>
+<td align="right">4</td>
+<td align="right">140.8</td>
+<td align="right">95</td>
+<td align="right">3.92</td>
+<td align="right">3.150</td>
+<td align="right">22.90</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Merc 280</td>
+<td align="right">19.2</td>
+<td align="right">6</td>
+<td align="right">167.6</td>
+<td align="right">123</td>
+<td align="right">3.92</td>
+<td align="right">3.440</td>
+<td align="right">18.30</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">4</td>
+</tr>
+</tbody>
+</table>
+<p>Also a quote using <code>&gt;</code>:</p>
+<blockquote>
+<p>“He who gives up [code] safety for [code] speed deserves neither.” (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
+</blockquote>
+</div>
+<div id="strava-bulk-export" class="section level2">
+<h2>Strava Bulk Export</h2>
+<p>Para iniciar el trabajo con datos deportivos, primero debemos conseguirlos. Strava es una de las plataformas mas populares para registrar esfuerzos con el smartphone o reloj GPS.</p>
+<p>Llevo usando Strava desde 2014, registrando cada sesion de entrenamiento, abarcando mas de 800 actividades a la fecha, cuyos resumenes se pueden ver en el archivo “datasets/export_4085175/activities.csv”.</p>
+<p>La carpeta export_4085175 se genero automaticamente al exportar mis actividades desde Strava (este link). En esta carpeta se pueden encontrar archivos con 2 tipos de extensiones, “.gpx” y “.fit.gz”. Para reducir el volumen solo mantuve 12 actividades en la carpeta.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># path &lt;- &quot;datasets/export_4085175/&quot;</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># </span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># archivos &lt;- list.files(paste0(path,&quot;activities&quot;))</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># </span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co"># archivos</span></span></code></pre></div>
+<p>Los archivos pueden contener informacion en forma de tracks (lecturas consecutivas), waypoints (puntos de interes), routes, bounds y metadata. En el caso de las actividades provenientes de Strava, la metadata de las actividades no viene en el archivo GPX, sino que en un resumen de actividades llamado activities.csv que esta en la carpeta del export</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># act_data &lt;- read.csv(paste0(path,&quot;activities.csv&quot;), header=T)</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># </span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># summary(act_data[,1:15])</span></span></code></pre></div>
+<p>En act data hay mucha data</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># analisis act data</span></span></code></pre></div>
+<p>Los archivos GPX son el estandar de la industria y la gran mayoria de las aplicaciones lo soporta. Los archivos FIT son un formato mas nuevo, y Strava lo comenzo a usar para comprimir las actividades provenientes de otras App. La extension .gz corresponde a un archivo comprimido, por lo que se deben descomprimir antes de cargar en R.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co"># archivosGPX &lt;- archivos[grep(&quot;.gpx&quot;,archivos)]</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co"># </span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># archivosfitgz &lt;- archivos[grep(&quot;.fit.gz&quot;,archivos)]</span></span></code></pre></div>
+<p>Ambos tipos de archivos vienen en formatos diferentes, por lo que se utilizan diferentes procedimientos para cargarlos. En el primer caso, para abrir los archivos GPX utilizaremos la libreria plotKML, y abriremos el primero de los archivos en la base.</p>
+<p>Para efecto de la mayoria de los analisis de archivo GPX, la informacion de interes se encuentra en la variable “tracks”</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># library(plotKML)</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co"># </span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co"># actividadGPX &lt;- readGPX(paste0(path,&quot;activities/&quot;,archivosGPX[3]))</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co"># </span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co"># gpx_stream &lt;- (actividadGPX$tracks[[1]][[1]])</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co"># </span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co"># head(gpx_stream)</span></span></code></pre></div>
+<p>Los archivos con extension .fit.gz vienen comprimidos, por lo que debemos extraer el archivo .fit y luego cargarlo a R. Para descomprimir utilizamos la funcion gunzip, de la libreria R.utils. Esta funcion descomprime el archivo en la carpeta original.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># library(R.utils)</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co"># </span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># archivosfitgz[1]</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># </span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co"># </span><span class="al">###</span><span class="co"> remove = FALSE permite preservar el archivo .gz original</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co"># gunzip(paste0(path,&quot;activities/&quot;,archivosfitgz[1]),remove=FALSE, overwrite=TRUE)</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co"># </span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co"># </span><span class="al">###</span><span class="co"> vuelve a contar los archivos, aparece solo el que acabamos de descomprimir</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co"># archivos &lt;- list.files(paste0(path,&quot;activities&quot;))</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co"># </span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co"># archivosfit &lt;- archivos[grep(&quot;.fit$&quot;,archivos)]</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co"># </span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="co"># archivosfit</span></span></code></pre></div>
+<p>Para cargarlos en R existen algunas librerias, algunas en CRAN, pero la libreria FITfileR es la que tiene menores dependencias. El problema es que no esta en CRAN, por lo que hay que instalarlas desde Github</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">## la funcion install_github esta en la libreria remotes, y tambien en devtools, ambas hacen lo mismo</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co"># remotes::install_github(&quot;grimbough/FITfileR&quot;)</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co"># </span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co"># library(FITfileR)</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co"># </span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co"># actividadfit &lt;- FITfileR::readFitFile(paste0(path,&quot;activities/&quot;,archivosfit[1]))</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="co"># </span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="co"># fit_stream &lt;- records(actividadfit)</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="co"># </span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="co"># head(fit_stream)</span></span></code></pre></div>
+<p>Tenemos 2 streams de GPS, provenientes de diferentes archivos. Para procesar estos archivos debemos homologar los nombres, y por convencion usaremos los nombres: long, lat, elev y time.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># source(&quot;R/RenameStream.R&quot;)</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="co"># </span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co"># fit_stream &lt;- records(actividadfit)</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co"># gpx_stream &lt;- (actividadGPX$tracks[[1]][[1]])</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co"># </span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co"># </span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="co"># fit_stream &lt;- RenameStream(fit_stream)</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co"># </span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="co"># gpx_stream &lt;- RenameStream(gpx_stream)</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co"># </span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="co"># head(gpx_stream)</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="co"># head(fit_stream)</span></span></code></pre></div>
+<p>Vamos a visualizar ambos trayectos en el mapa, utilizando Leaflet, que es un framework de mapas abiertos. Para esto, debemos crear un objeto de datos espaciales, llamados SpatialPoints, utilizando la libreria sp. Para crear los objetos debemos pasar las coordenadas en orden longitud latitud</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># library(leaflet)</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="co"># library(sp)</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="co"># </span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co"># ## creo objeto espacial para ambos tracks por separado </span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="co"># gpx_espacial &lt;- SpatialPointsDataFrame(data=gpx_stream,  coords=gpx_stream[,1:2], proj4string=CRS(&quot;+proj=longlat +datum=WGS84&quot;))</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co"># </span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="co"># fit_espacial &lt;- SpatialPointsDataFrame(data=fit_stream,  coords=fit_stream[,1:2], proj4string=CRS(&quot;+proj=longlat +datum=WGS84&quot;))</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="co"># </span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co"># </span><span class="al">###</span><span class="co"> creo mapa de leaflet</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co"># mapa &lt;- leaflet() %&gt;%</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="co">#   addTiles() %&gt;%  # Add default OpenStreetMap map tiles</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="co">#   addProviderTiles(providers$OpenTopoMap) %&gt;%</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a><span class="co">#   addCircleMarkers(data = gpx_espacial, radius = 1, color = &quot;blue&quot;) %&gt;%</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a><span class="co">#     addCircleMarkers(data = fit_espacial, radius = 1, color = &quot;red&quot;)</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a><span class="co"># </span></span>
+<span id="cb12-16"><a href="#cb12-16"></a><span class="co"># mapa</span></span></code></pre></div>
+<p>Por errores de medicion del GPS, que pueden deberse a diversos factores, algunas trayectorias muestran espacios sin datos, y a veces presentan comporamientos erraticos. Para corregir esto se aplicara una funcion de suavizacion gaussiana, la cual puede regularse el ancho de suavizado, y tambien permite interpolar valores entre mediciones.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># source(&quot;R/SmoothCoords.R&quot;)</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="co"># </span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="co"># fit_smooth &lt;- SmoothCoords(fit_stream)</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="co"># </span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="co"># gpx_smooth &lt;- SmoothCoords(gpx_stream)</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="co"># gpx_interpolado &lt;- SmoothCoords(gpx_stream,interpolate = TRUE)</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="co"># </span></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="co"># </span></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="co"># gpx_espacial_smooth &lt;- SpatialPointsDataFrame(data=gpx_smooth,  coords=gpx_smooth[,6:7], proj4string=CRS(&quot;+proj=longlat +datum=WGS84&quot;))</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="co"># </span></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="co"># gpx_espacial_interpolado &lt;- SpatialPointsDataFrame(data=gpx_interpolado,  coords=gpx_interpolado[,1:2], proj4string=CRS(&quot;+proj=longlat +datum=WGS84&quot;))</span></span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="co"># </span></span>
+<span id="cb13-13"><a href="#cb13-13"></a><span class="co"># </span></span>
+<span id="cb13-14"><a href="#cb13-14"></a><span class="co"># </span><span class="al">###</span><span class="co"> creo mapa de leaflet con ruta interpolada versus ruta original y ruta suavizada</span></span>
+<span id="cb13-15"><a href="#cb13-15"></a><span class="co"># mapa2 &lt;- leaflet() %&gt;%</span></span>
+<span id="cb13-16"><a href="#cb13-16"></a><span class="co">#   addTiles() %&gt;%  # Add default OpenStreetMap map tiles</span></span>
+<span id="cb13-17"><a href="#cb13-17"></a><span class="co">#   addProviderTiles(providers$OpenTopoMap) %&gt;%</span></span>
+<span id="cb13-18"><a href="#cb13-18"></a><span class="co">#   addCircleMarkers(data = gpx_espacial_interpolado, radius = 1, color = &quot;green&quot;) %&gt;%</span></span>
+<span id="cb13-19"><a href="#cb13-19"></a><span class="co">#   addCircleMarkers(data = gpx_espacial, radius = 1, color = &quot;blue&quot;) %&gt;%</span></span>
+<span id="cb13-20"><a href="#cb13-20"></a><span class="co">#   addCircleMarkers(data = gpx_espacial_smooth, radius = 1, color = &quot;red&quot;)</span></span>
+<span id="cb13-21"><a href="#cb13-21"></a><span class="co"># </span></span>
+<span id="cb13-22"><a href="#cb13-22"></a><span class="co"># mapa2</span></span></code></pre></div>
+<p>Para poder analizar esta informacion, calculamos algunas metricas como diferencias de distancia, tiempo y elevacion entre lecturas, y con eso calculamos la velocidad, ritmo de carrera, pendiente y velocidad vertical.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># source(&quot;R/Derivatives.R&quot;)</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co"># library(ggplot2)</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="co"># </span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co"># fit_interpolado &lt;- SmoothCoords(fit_stream,interpolate = TRUE)</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co"># </span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co"># stream_fit_completo &lt;- Derivatives(fit_interpolado)</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="co"># </span></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="co"># fig1 &lt;- ggplot(stream_fit_completo) + </span></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="co">#   geom_point(aes(x=hz_velocity,y=grade))</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="co"># </span></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="co"># fig1</span></span></code></pre></div>
+<p>El analisis de velocidad horizontal versus pendiente muestra mucha variabilidad, debido a que se realizo a nivel de lectura del dispositivo, pero muchas veces el objeto de estudio son segmentos de una distancia superior a una lectura. si separamos el track en segmentos de 100 metros (con pendiente equivalente), veremos que cambia el patron observado en la figura anterior</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># source(&quot;R/SplitSegments.R&quot;)</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="co"># </span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="co"># segmentos &lt;- SplitSegments(stream_fit_completo, value = &quot;distance&quot;, size = 100)</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co"># </span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="co"># fig1 + </span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="co">#   geom_point(data=segmentos, aes(x=hz_velocity,y=grade), col= &quot;red&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># source(&quot;R/ElevationCorrection.R&quot;)</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="co"># </span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="co"># stream_fit_corregido14 &lt;- ElevationCorrection(fit_stream, z=14)</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="co"># stream_fit_corregido12 &lt;- ElevationCorrection(fit_stream, z=12)</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="co"># stream_fit_corregido10 &lt;- ElevationCorrection(fit_stream, z=10)</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="co"># stream_fit_corregido8 &lt;- ElevationCorrection(fit_stream, z=8)</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="co"># stream_fit_corregido6 &lt;- ElevationCorrection(fit_stream, z=6)</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="co"># </span></span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="co"># ggplot(fit_stream) + </span></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="co">#   geom_line(aes(x=distance, y=elev)) +</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="co">#   geom_line(data=stream_fit_corregido14, aes(x=distance, y = elev_DEM),col=&quot;red&quot;) +</span></span>
+<span id="cb16-12"><a href="#cb16-12"></a><span class="co">#   geom_line(data=stream_fit_corregido12, aes(x=distance, y = elev_DEM),col=&quot;orange&quot;) +</span></span>
+<span id="cb16-13"><a href="#cb16-13"></a><span class="co">#   geom_line(data=stream_fit_corregido10, aes(x=distance, y = elev_DEM),col=&quot;purple&quot;) +</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a><span class="co">#   geom_line(data=stream_fit_corregido8, aes(x=distance, y = elev_DEM),col=&quot;blue&quot;) +</span></span>
+<span id="cb16-15"><a href="#cb16-15"></a><span class="co">#   geom_line(data=stream_fit_corregido6, aes(x=distance, y = elev_DEM),col=&quot;green&quot;) +</span></span>
+<span id="cb16-16"><a href="#cb16-16"></a><span class="co">#   theme_minimal()</span></span></code></pre></div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>A footnote here.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

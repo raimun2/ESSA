@@ -1,0 +1,343 @@
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+### plots ESStream
+## plot       <- x = time, y = hr & pace, facet = session
+## plot_route <- x = long, y = lat, color = Speed, bkg <- stamen maps (ggmap)
+## animacion <- single ride y multiride
+## map facets
+## map minimal 
+## heatmap    <- x = long, y = lat, color = point density, bkg <- terrain map (ggmap)
+## elev_prf   <- x = time, y = elevation, group = session, facets = session
+## leaflet    <- single or multiple sessions
+## summary    <- x = time, y = hr, speed, dist, duration etc, group = moving (or resting or total)
+## timelin    <- x = time, y = Date
+## dow        <- x = time, y = dow (geom ridges)
+## training calendar
+
+
+
+
+
+
+########## leaflet #####
+
+# 
+# 
+# 
+# leaflet() %>%
+#   addTiles() %>%  # Add default OpenStreetMap map tiles
+#   addCircleMarkers(data = dat_int, radius = 2, col = "red")
+# 
+# leaflet(dat) %>%
+#   addTiles() %>%  # Add default OpenStreetMap map tiles
+#   addCircleMarkers(radius = 5, color = (dat$tramo)) %>%
+#   addMarkers(lng=javier_pochoco$lng[nrow(javier_pochoco)], lat=javier_pochoco$lat[nrow(javier_pochoco)], popup="inicio tramo") 
+# 
+# 
+# crs_utm <- "+proj=utm +zone=19 +south +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"
+# crs_ll <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+# 
+# 
+# 
+# muestra = base[sample(1:125367,70000,FALSE),]
+# 
+# 
+# pal <- colorNumeric(
+#   palette = terrain.colors(10),
+#   domain = muestra$altitude)
+# 
+# 
+# m <- leaflet(muestra) %>%
+#   addTiles(group = "OSM (default)") %>%  # Añade por defecto los Tiles de  OpenStreetMap
+#   addProviderTiles(providers$Stamen.Toner, group = "Toner") %>%
+#   addProviderTiles(providers$Stamen.TonerLite, group = "Toner Lite") %>%
+#   addProviderTiles(providers$Esri.WorldImagery, group = "Satellite")%>%
+#   addCircleMarkers(
+#     radius = 1,
+#     color =  ~pal(altitude),
+#     stroke = FALSE, fillOpacity = 0.5
+#   )  %>% addMarkers(lng=center_lng, lat=center_lat, popup="Plaza Manantiales")
+# 
+# 
+# 
+# 
+# 
+# ###########  ggplot ########## 
+# 
+# 
+# ggmap(map) + geom_point(data=segs,shape=".",col="yellow",aes(lng,lat)) +
+#   geom_polygon(data=shape.points,aes(long,lat,group=group,fill=Distancia_minima),color=NA,alpha=0.7) +
+#   scale_fill_gradientn(colours = terrain.colors(3)) + 
+#   geom_path(data=puntos_contorno,  aes(lng,lat, group=linea),col="red") +
+#   geom_point(data=cerros,shape=17,col="darkgreen",aes(lng,lat),size=4) + 
+#   labs(title = "Acceso a la Montaña #runtothehills", size=2,
+#        subtitle = "Distancia (km) de cada manzana al cerro mas cercano", 
+#        caption = "Fuentes: \n Stamen (mapa) \n SRTM (curvas de nivel) \n Wikiexplora, Andeshandbook, Strava (trayectorias cerros) \n  Tageo, Wikipedia, Geonames (coordenadas cumbres) \n 
+#        Autor: Raimundo Sanchez, PhD")
+# 
+# get_density <- function(x, y, ...) {
+#   dens <- MASS::kde2d(x, y, ...)
+#   ix <- findInterval(x, dens$x)
+#   iy <- findInterval(y, dens$y)
+#   ii <- cbind(ix, iy)
+#   return(dens$z[ii])
+# }
+# 
+# require(ggimage) 
+# 
+# muestra_plot$density <- get_density(muestra_plot$lat, muestra_plot$lon, n = 100)
+# 
+# img = "desert-map-copy.jpg"
+# 
+# 
+# p <- ggplot(muestra_plot) + 
+#   geom_point(aes(lon, lat, col = density), size=1) + 
+#   scale_color_gradient(low = "yellow", high = "red") +
+#   ylim(-11.699,-11.6293) + 
+#   xlim(166.8844,167.0253) +
+#   theme_void() + 
+#   theme(legend.position = "none")
+# 
+# png("watopia.png",units="px", width=700 , height=460)
+# 
+# ggbackground(p, img, alpha=.2) + 
+#   ggtitle("   MAPA DE CALOR: WATOPIA", 
+#           subtitle = "    ¿Por donde pedalea la comunidad Human Power?                        ROJO: alto trafico       AMARILLO: bajo trafico \n") + 
+#   labs(caption = "Fuente: HumanPower.App    \n")
+# 
+# dev.off()
+# 
+# 
+# # Create plot
+# p <- ggplot() +
+#   geom_density_ridges(aes(x = time, y = wday), plot_data, size = 0.5) +
+#   theme_ridges() +
+#   scale_y_discrete(expand = c(0.01, 0), labels = c("Sun", "Sat", "Fri", "Thu", "Wed", "Tue", "Mon")) +
+#   scale_x_datetime(expand = c(0, 0), date_labels = "%I:%M %p") +
+#   theme(panel.grid = element_blank(), plot.margin = unit(rep(1, 4), "cm")) +
+#   xlab(NULL) + ylab(NULL)
+# 
+# # obtener distancias, default es en kms
+# temp <- dplyr::group_by(temp, activity) %>%
+#   dplyr::mutate(distance = get_dists(lon, lat)) %>% 
+#   dplyr::ungroup()
+# 
+# ## defino margen de mapa (% del cuadrado generado por coordenadas)
+# f = 0.05
+# bbox <- ggmap::make_bbox(temp$lon, temp$lat, f = f)
+# 
+# ## generar mapa base zoom 13 es bien detallado, ahi jugar con ese parametro
+# maptype = 'terrain'
+# map <- suppressWarnings(suppressMessages(ggmap::get_map(bbox, maptype = maptype,zoom=13)))
+# ## genera objeto de ggplot con mapa de fondo
+# pbase <- suppressMessages(ggmap::ggmap(map) +
+#                             ggplot2::coord_map() + 
+#                             ggplot2::theme(axis.title = ggplot2::element_blank()))
+# 
+# ## agrega trayectorias de strava al mapa base
+# p = pbase +
+#   ggplot2::geom_path(ggplot2::aes(lon, lat, group = activity),
+#                      data = temp,
+#                      alpha = 1, size = .8, lineend = "round", colour = "red3") + ggplot2::ggtitle("Mapa Strava")
+# 
+# 
+# 
+# ########## stravalib ########## 
+# 
+# #' Plots activities superimposed on a map
+# #'
+# #' Plots activities superimposed on a map
+# #' @param data A data frame output from process_data()
+# #' @param lon_min Minimum longitude
+# #' @param lon_max Maximum longitude
+# #' @param lat_min Minimum latitude
+# #' @param lat_max Maximum latitude
+# #' @keywords
+# #' @export
+# #' @examples
+# #' plot_map()
+# 
+# plot_map <- function(data, lon_min = -180, lon_max = 180, lat_min = -90, lat_max = 90) {
+#   # Create plot
+#   p <- ggplot2::ggplot() +
+#     ggplot2::geom_path(ggplot2::aes(lon, lat, group = id),
+#                        data %>% dplyr::filter(lon > lon_min, lon < lon_max, lat > lat_min, lat < lat_max),
+#                        alpha = 0.3, size = 0.3, lineend = "round") +
+#     ggplot2::coord_map() +
+#     ggplot2::theme_void()
+#   
+#   # Return plot
+#   p
+# }
+# 
+# 
+# 
+# ########## animation ########## 
+# 
+# ### BACKYARD
+# library(dplyr)
+# library(rStrava)
+# #library(gganimate)
+# library(lubridate)
+# #https://padpadpadpad.github.io/post/animate-your-strava-activities-using-rstrava-and-gganimate/
+# 
+# my_acts <- get_activity_list(stoken)
+# external_id %like% "garmin_push_##"
+# 
+# f = 0.05
+# bbox <- ggmap::make_bbox(temp$lon, temp$lat, f = f)
+# 
+# expand = 10
+# 
+# 
+# maptype = 'terrain'
+# map <- suppressWarnings(suppressMessages(ggmap::get_map(bbox, maptype = maptype,zoom=13,source="google")))
+# 
+# pbase <- suppressMessages(ggmap::ggmap(map) +
+#                             ggplot2::coord_map() + 
+#                             ggplot2::theme(axis.title = ggplot2::element_blank()))
+# 
+# 
+# ventana_movil_dias = 90
+# dia_inicio = as.Date("2014-12-01")
+# frames = round(as.numeric(today() - dia_inicio)/7)
+# super_temp = NULL
+# 
+# for (semana in 1:frames)
+# {
+#   
+#   act_data <- compile_activities(my_acts) %>% 
+#     filter(start_latitude <= -33.3 & start_latitude >= -33.45) %>%  
+#     filter(start_longitude < -70.45 & start_longitude > -70.62)  %>% 
+#     filter(as.Date(substr(start_date_local,1,10),"%Y-%m-%d") > dia_inicio+(semana-1)*7 - ventana_movil_dias & 
+#              as.Date(substr(start_date_local,1,10),"%Y-%m-%d") < dia_inicio+(semana-1)*7 )
+#   
+#   act_data <- chk_nopolyline(act_data)
+#   
+#   temp <- dplyr::group_by(act_data, map.summary_polyline) %>%
+#     dplyr::do(get_latlon(.)) %>%
+#     dplyr::ungroup()
+#   temp$activity <- as.numeric(factor(temp$map.summary_polyline))
+#   temp$map.summary_polyline <- NULL
+#   
+#   
+#   temp <- split(temp, temp$activity)
+#   temp <- lapply(temp, function(x) {
+#     
+#     xint <- stats::approx(x = x$lon, n = expand * nrow(x))$y
+#     yint <- stats::approx(x = x$lat, n = expand * nrow(x))$y
+#     data.frame(activity = unique(x$activity), lat = yint, lon = xint)
+#     
+#   })
+#   temp <- do.call('rbind', temp)
+#   
+#   # get distances, default is km
+#   temp <- dplyr::group_by(temp, activity) %>%
+#     dplyr::mutate(distance = get_dists(lon, lat)) %>% 
+#     dplyr::ungroup()
+#   
+#   # xy lims
+#   
+#   #function(act_data, alpha = NULL, f = 1, key = NULL, add_elev = FALSE, as_grad = FALSE, distlab = TRUE, distval = 0, size = 0.5, col = 'red', expand = 10, maptype = 'terrain', source = 'google', ...)
+#   temp$frame = dia_inicio+(semana-1)*7
+#   super_temp = rbind(super_temp,temp)
+#   
+#   
+# }
+# 
+# p2 = pbase +
+#   ggplot2::geom_path(ggplot2::aes(lon, lat, group = frame),
+#                      data = sample,
+#                      alpha = 1, size = .8, lineend = "round", colour = "red3") +
+#   transition_states(frame,transition_length = 3, state_length = 4,wrap=F) #+ view_follow() 
+# 
+# 
+# anim2 <- animate(p2,fps = 20, duration = 30, width= 1024,  height=768) ## end_pause = 10, rewind = TRUE,
+# anim_save("filenamehere.gif", anim2)
+# 
+# 
+# anim2
+# 
+# 
+# 
+# 
+# 
+# p = 
+#   
+#   pbase +
+#   ggplot2::geom_path(ggplot2::aes(lon, lat, group = activity),
+#                      data = sample,
+#                      alpha = 1, size = .8, lineend = "round", colour = "red3") + ggplot2::ggtitle({frame}) + 
+#   transition_states(frame,transition_length = 4, state_length = 2) +
+#   view_follow() + shadow_mark()
+# 
+# 
+# 
+# anim <- animate(p)
+# anim_save("filenamehere.gif", anim)
+# 
+# 
+# 
+# sample = super_temp[super_temp$activity %in% 1,]
+# 
+# 
+# 
+# 
+# anim_save("filenamehere.gif", anim2)
+# 
+# 
+# 
+# dev.copy(gif,paste0("/GIF/","year",".png"),width = 1024, height = 768)
+# dev.off()
+# print(nrow(act_data))
+# print(year)
+# 
+# #all 412
+# 
+# #15 2014
+# #121 2015
+# #111 2016
+# #46 2017
+# #107 2018
+# #12 2019
+# 
+# 
+
+
+
+```
+
+## GitHub Documents
+
+This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+
+## Including Code
+
+You can include R code in the document as follows:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

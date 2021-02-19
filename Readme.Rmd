@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Endurance Sports Stream Analysis (ESSA)
-subtitle: How to obtain and prepare Endurance Sports Stream Data
+title: Endurance Sports Stream Analysis (ESStream)
+subtitle: How to obtain and process Endurance Sports Stream Data
 tags: [R, Endurance Sports]
 linktormd: true
 leafletmap: true
@@ -14,6 +14,6 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Endurance Athletes generate tons of data while recording their activities with GPS watch, smartphone or other devices. This package aims to unify the criteria for gathering and pre processing stream data for later analysis. 
+Endurance Athletes generate tons of data while recording their activities with GPS watch, smartphones or other devices. This package aims to unify the criteria for gathering and pre processing stream data for later analysis. 
 
 

@@ -1,0 +1,12 @@
+Package: ESStream
+Type: Package
+Title: Endurance Sports Streams Processing 
+Version: 0.1.0
+Author: Raimundo Sanchez, PhD
+Maintainer: Raimundo Sanchez, PhD <raimundosanchezu@gmail.com>
+Description: Gather, standarize, correct, analize and visualize streans data from Endurance Sports.
+    Stream data refers to reading level data, recorded by GPS devices while training.
+License: MIT License
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1

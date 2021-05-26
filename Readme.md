@@ -1,4 +1,4 @@
-Endurance Sports Stream Analysis (ESStream)
+GPS Stream Analysis (GPStream)
 ================
 
 Endurance Athletes generate tons of data while recording their
